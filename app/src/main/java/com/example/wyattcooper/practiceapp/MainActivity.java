@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.NumberPicker;
 import java.util.Random;
@@ -11,10 +12,13 @@ import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.AuthData;
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
     NumberPicker np;
+    EditText editable;
+    Button enter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +27,28 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         final Firebase myFirebaseRef = new Firebase("https://dazzling-inferno-9759.firebaseio.com/");
-        myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
+
+        enter = (Button) findViewById(R.id.button);
+
+        editable = (EditText) findViewById(R.id.editText);
 
         textView = (TextView) findViewById(R.id.textView);
 
-        myFirebaseRef.child("message").addValueEventListener(new ValueEventListener() {
+        enter.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myFirebaseRef.child("name").setValue(editable.getText().toString());
+            }
+        });
+
+        myFirebaseRef.child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String data = (String) snapshot.getValue();
-                textView.setText(data);
+                if (data != null){
+                    textView.setText("Hello "+data);
+                }
+
             }
             @Override public void onCancelled(FirebaseError error) { }
         });
@@ -56,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText("You got it");
                         myFirebaseRef.child("values").setValue(newVal);
                     }
+
             }
         });
-
 
     }
 }
