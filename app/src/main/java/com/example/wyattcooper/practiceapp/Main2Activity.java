@@ -34,6 +34,7 @@ public class Main2Activity extends AppCompatActivity {
         enter = (Button) findViewById(R.id.button3);
         title = (TextView) findViewById(R.id.textView2);
         datePicker = (EditText) findViewById(R.id.editText3);
+        notes = (EditText) findViewById(R.id.editText2);
 
         final Firebase entryRef = myFirebaseRef.child("entries");
 
@@ -56,6 +57,7 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if (datePicker.getText().toString() != null) {
                     NewEntry.setDate(datePicker.getText().toString());
+                    NewEntry.setText(notes.getText().toString());
                     entryRef.push().setValue(NewEntry);
                 }
             }

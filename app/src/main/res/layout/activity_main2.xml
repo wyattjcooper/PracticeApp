@@ -33,10 +33,11 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/editText2"
-        android:layout_above="@+id/button2"
-        android:layout_centerHorizontal="true"
         android:outlineProvider="background"
-        android:linksClickable="true" />
+        android:linksClickable="true"
+        android:layout_below="@+id/editText3"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="ENTER"
         android:id="@+id/button3"
-        android:layout_below="@+id/editText3"
+        android:layout_below="@+id/editText2"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
