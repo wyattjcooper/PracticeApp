@@ -13,6 +13,8 @@ import com.firebase.client.ValueEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.AuthData;
+import android.content.Intent;
+import com.example.wyattcooper.practiceapp.entry;
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Firebase myFirebaseRef = new Firebase("https://dazzling-inferno-9759.firebaseio.com/");
 
+        final Firebase nameRef = myFirebaseRef.child("name");
         enter = (Button) findViewById(R.id.button);
 
         editable = (EditText) findViewById(R.id.editText);
@@ -37,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         enter.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myFirebaseRef.child("name").setValue(editable.getText().toString());
+                nameRef.setValue(editable.getText().toString());
+                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -45,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String data = (String) snapshot.getValue();
-                if (data != null){
-                    textView.setText("Hello "+data);
+                if (data != null) {
+                    textView.setText("Hello " + data);
                 }
 
             }
-            @Override public void onCancelled(FirebaseError error) { }
+
+            @Override
+            public void onCancelled(FirebaseError error) { }
         });
 
 
